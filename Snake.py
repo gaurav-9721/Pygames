@@ -171,8 +171,6 @@ while running:
         part.append(snakeY)
         snake.append(part)
 
-        print(part)
-
         if len(snake) > snake_length:
             del snake[0]
         ifSnakeEatsSnake()
