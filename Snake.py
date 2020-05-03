@@ -33,7 +33,7 @@ gameoverText = ''
 def drawFood():
     global foodX, foodY, foodsize
     foodRect = pygame.Rect(foodX,foodY, foodsize,foodsize)
-    pygame.draw.rect(screen, (255,0,0), foodRect)
+    pygame.draw.rect(screen, (255,255,0), foodRect)
 
 def changeFood():
     global foodX, foodY, snakeSize
@@ -45,7 +45,29 @@ def drawSnake():
     for x, y in snake:
         rect = pygame.Rect(x,y, snakeSize, snakeSize)
         pygame.draw.rect(screen, (0,255,0), rect)
+    drawEyes()
 
+
+def drawEyes():
+    global snake, snakeDirection
+    x, y = snake[-1]
+    eyesize = 4
+    eye1 = eye2 = pygame.Rect(x + 10, y + 10, eyesize, eyesize)
+    if snakeDirection == 1:
+        eye1 = pygame.Rect(x + 4, y + 5, eyesize, eyesize)
+        eye2 = pygame.Rect(x + 20, y + 5, eyesize, eyesize)
+    elif snakeDirection == 2:
+        eye1 = pygame.Rect(x + 4, y + 10, eyesize, eyesize)
+        eye2 = pygame.Rect(x + 20, y + 10, eyesize, eyesize)
+    elif snakeDirection == 3:
+        eye1 = pygame.Rect(x + 4, y + 4, eyesize, eyesize)
+        eye2 = pygame.Rect(x + 4, y + 20, eyesize, eyesize)
+
+    elif snakeDirection == 4:
+        eye1 = pygame.Rect(x + 18, y + 4, eyesize, eyesize)
+        eye2 = pygame.Rect(x + 18, y + 20, eyesize, eyesize)
+    pygame.draw.rect(screen, (255, 0, 0), eye1)
+    pygame.draw.rect(screen, (255, 0, 0), eye2)
 def moveSnake():  # (x coordinate of snake, y cordinate of snake, direction of snake)
     global snake, snakeDirection, gameover, screenY, screenX, snakeX, snakeY, gameoverText
     x, y = snake[-1]
@@ -94,11 +116,13 @@ def ifSnakeEatsFood(sx,sy,fx,fy):
     else:
         return False
 
+
 def ifSnakeEatsSnake():
     global snake, gameover, gameoverText
     if snake[-1] in snake[:-1]:
         gameover = True
-        gameoverText = 'YOU ATE YOURSELF'
+
+
 
 def gameOverText():
     global snakeSpeed, gameoverText, score
@@ -149,7 +173,7 @@ while running:
                 if event.key == pygame.K_SPACE:
                     restart()
     else:
-        pygame.time.delay(50)
+        pygame.time.delay(80)
         clock.tick(60)
         screen.fill((0,0,0))
         for event in pygame.event.get():
